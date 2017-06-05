@@ -25,7 +25,8 @@ app.use(function(err, req, res, next){
 
 module.exports = app ;
 
-var bittrex = require('./public/js/node.bittrex.api.js');
+var bittrex = require('js/node.bittrex.api.js');
+
 bittrex.options({
     'apikey': '0be3cd502e804ee18d3a2f99003128d0',
     'apisecret': '8aa9176bd00546b8b6a49e1b428d85c2',
