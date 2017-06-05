@@ -13,6 +13,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="../js/javascript.js"></script>  
 <script src="../js/jquery.jsontotable.js"></script>  
+<script>
+$(function(){
+   onLoadClick();
+});
+</script>
 <section class='container'>
           <hgroup>
             <h1>Crypto Balances</h1>
@@ -21,9 +26,10 @@
         <div class="row">
           <section class='col-xs-12 col-sm-6 col-md-6'>
             <section>
-              <input type='button' onClick='onLoadClick()' value='Load' style='width:77px' id='loadBtn'/>
+              <input type='button' onClick='onLoadClick()' value='Load' style='width:77px;display:none' id='loadBtn'/>
 			  <p> Last Update 
-				<b id='lastUpd'> 10 </b>
+				<b id='lastUpd'></b>
+				<p>Total: <b id='totalAmt'></b></p>
 			  </p> 
 			  <div>
 				<table id='currenciesTable'/>					  			
