@@ -6,7 +6,25 @@ var express = require('express'),
     morgan  = require('morgan');
 	
 app.use(express.static(__dirname + '/public'));
-	
+   
+Object.assign=require('object-assign')
+
+app.engine('html', require('ejs').renderFile);
+app.use(morgan('combined'))
+
+app.set('port', (process.env.PORT || 5000));
+
+app.get('/', function (req, res) {
+    res.render('index.html');  
+});
+// error handling
+app.use(function(err, req, res, next){
+  console.error(err.stack);
+  res.status(500).send('Something bad happened!');
+});
+
+module.exports = app ;
+
 var bittrex = require('./public/js/node.bittrex.api.js');
 bittrex.options({
     'apikey': '0be3cd502e804ee18d3a2f99003128d0',
@@ -15,26 +33,6 @@ bittrex.options({
     'verbose': false,
     'cleartext': false
 });
-    
-Object.assign=require('object-assign')
-
-app.engine('html', require('ejs').renderFile);
-app.use(morgan('combined'))
-
-app.set('port', (process.env.PORT || 5000));
-var port = this.address().port;
-
-app.get('/', function (req, res) {
-    res.render('index.html');  
-});
-
-// error handling
-app.use(function(err, req, res, next){
-  console.error(err.stack);
-  res.status(500).send('Something bad happened!');
-});
-
-module.exports = app ;
 
 app.get('/getbalances', function (req, res) {
 	
