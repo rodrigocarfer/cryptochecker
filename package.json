@@ -1,6 +1,6 @@
 {
   "name": "cryptochecker",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "main": "server.js",
   "dependencies": {
     "chai": "^3.5.0",
@@ -10,7 +10,10 @@
     "mocha": "^2.4.5",
     "mongodb": "^2.1.16",
     "morgan": "^1.7.0",
-    "object-assign": "4.1.0"
+    "object-assign": "4.1.0",
+	"request": ">= 2.35.0",
+    "JSONStream": ">= 0.8.4",
+    "event-stream": ">= 3.1.5"
   },
   "engine": {
     "node": "*",
@@ -23,12 +26,12 @@
     "type": "git",
     "url": "git+ssh://git@github.com/rodrigocarfer/cryptochecker.git"
   },
-  "author": "Steve Speicher <sspeiche@gmail.com>",
+  "author": "Rod",
   "license": "CC-BY-1.0",
   "bugs": {
     "url": "http://github.com/openshift/nodejs-ex/issues"
   },
-  "homepage": "http://github.com/openshift/nodejs-ex",
+  "homepage": "http://github.com/rodrigocarfer/cryptochecker",
   "devDependencies": {},
   "description": ""
 }
