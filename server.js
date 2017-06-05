@@ -15,18 +15,14 @@ bittrex.options({
     'verbose': false,
     'cleartext': false
 });
-
     
 Object.assign=require('object-assign')
 
 app.engine('html', require('ejs').renderFile);
 app.use(morgan('combined'))
 
-var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
-    ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
-    mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
-    mongoURLLabel = "";
-
+app.set('port', (process.env.PORT || 5000));
+var port = this.address().port;
 
 app.get('/', function (req, res) {
     res.render('index.html');  
@@ -38,7 +34,6 @@ app.use(function(err, req, res, next){
   res.status(500).send('Something bad happened!');
 });
 
-app.listen(port, ip);
 module.exports = app ;
 
 app.get('/getbalances', function (req, res) {
@@ -55,6 +50,10 @@ app.get('/getbalances', function (req, res) {
 		}			
     });
 	});	
+});
+
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
 });
 
 function timeToReturn(res, currencies){
