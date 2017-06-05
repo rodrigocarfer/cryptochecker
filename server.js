@@ -5,6 +5,8 @@ var express = require('express'),
     eps     = require('ejs'),
     morgan  = require('morgan');
 	
+app.use(express.static(path.join(__dirname, 'public')));
+	
 var bittrex = require('./js/node.bittrex.api.js');
 bittrex.options({
     'apikey': '0be3cd502e804ee18d3a2f99003128d0',
