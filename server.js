@@ -5,9 +5,9 @@ var express = require('express'),
     eps     = require('ejs'),
     morgan  = require('morgan');
 	
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname + '/public'));
 	
-var bittrex = require('./js/node.bittrex.api.js');
+var bittrex = require('./public/js/node.bittrex.api.js');
 bittrex.options({
     'apikey': '0be3cd502e804ee18d3a2f99003128d0',
     'apisecret': '8aa9176bd00546b8b6a49e1b428d85c2',
@@ -64,11 +64,18 @@ function timeToReturn(res, currencies){
 	}	
 }
 
+function prepareData(data){
+	data.CryptoAddress = undefined;
+	data.Pending = undefined;
+	return data;
+}
+
 function checkRate(tickerData, currencies, res) {
     if (tickerData.Currency == "BTC") {	
 		tickerData.BtcValue = tickerData.Balance;
 		currencies["obtainedPrices"]++;	
-		currencies[tickerData.Currency] = tickerData;	
+		tickerData
+		currencies[tickerData.Currency] = prepareData(tickerData);	
 		timeToReturn(res, currencies);		
     }
     else {
@@ -78,7 +85,7 @@ function checkRate(tickerData, currencies, res) {
 		var rate = marketData.result.Last;
 		tickerData.BtcValue = tickerData.Balance * rate;
 		currencies["obtainedPrices"]++;
-		currencies[tickerData.Currency] = tickerData;
+		currencies[tickerData.Currency] = prepareData(tickerData);	
 		timeToReturn(res, currencies);
         });	
     }		
