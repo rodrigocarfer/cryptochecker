@@ -9,35 +9,35 @@
   
 
 </head>
-<body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="js/javascript.js"></script>  
-<script src="js/jquery.jsontotable.js"></script>  
-<script>
-$(function(){
-   onLoadClick();
-});
-</script>
-<section class='container'>
-          <hgroup>
-            <h1>Crypto Balances</h1>
-          </hgroup>
-
-        <div class="row">
-          <section class='col-xs-12 col-sm-6 col-md-6'>
-            <section>
-              <input type='button' onClick='onLoadClick()' value='Load' style='width:77px;display:none' id='loadBtn'/>
-			  <p> Last Update 
-				<b id='lastUpd'></b>
-				<p>Total: <b id='totalAmt'></b></p>
-			  </p> 
-			  <div>
-				<table id='currenciesTable'/>					  			
-			  </div>
-			  <div id = 'totalDiv'></div>			  
-            </section>
-          </section>
-        </div>
-</section>
-</body>
+	<body>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+		<script src="js/javascript.js"></script>  
+		<script src="js/jquery.jsontotable.js"></script>  
+		<script>
+		$(function(){
+		   onLoadClick();
+		});
+		</script>
+		<hgroup>
+		<h1>Crypto Balances</h1>
+		</hgroup>
+		<section class='container' class='col-xs-12 col-sm-6 col-md-6'>
+			<div class="row" id="tableDiv">		
+					<table id='currenciesTable'/>						
+			</div>
+		</section>
+		<section class='container' class='col-xs-12 col-sm-6 col-md-6'>
+			<div class="row">
+				<input type='button' onClick='onLoadClick()' value='Load' style='width:77px;display:none' id='loadBtn'/>				
+				<p> Last Update 
+					<b id='lastUpd'></b>
+					<p>Total: <b id='totalAmt'></b></p>
+				</p> 		
+									
+				<div id = 'totalDiv'></div>				
+				<div class="row" id="amtChart" style="width:90%;height:250px;padding-top: 40px;text-align: center;margin-left: auto;margin-right: auto;"/>	
+		   </div>
+		</section>
+	</body>
 </html>
