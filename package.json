@@ -3,17 +3,18 @@
   "version": "1.0.0",
   "main": "server.js",
   "dependencies": {
+    "JSONStream": "^0.8.4",
+    "body-parser": "^1.17.2",
     "chai": "^3.5.0",
     "chai-http": "^2.0.1",
     "ejs": "^2.4.1",
+    "event-stream": "^3.1.5",
     "express": "^4.13.4",
     "mocha": "^2.4.5",
     "mongodb": "^2.1.16",
     "morgan": "^1.7.0",
     "object-assign": "4.1.0",
-	"request": "^2.35.0",
-    "JSONStream": "^0.8.4",
-    "event-stream": "^3.1.5"
+    "request": "^2.35.0"
   },
   "engine": {
     "node": "*",

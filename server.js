@@ -3,14 +3,15 @@ var express = require('express'),
     fs      = require('fs'),
     app     = express(),
     eps     = require('ejs'),
-    morgan  = require('morgan');
+    morgan  = require('morgan'),
+	bodyParser = require('body-parser');
 	
 app.use(express.static(__dirname + '/public'));
 
-var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
 app.use(bodyParser.json());
 
 var lastTimeDbUpdated = new Date();
