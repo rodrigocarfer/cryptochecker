@@ -37,7 +37,7 @@ module.exports = app ;
 
 var bittrex = require('./public/js/node.bittrex.api.js');
 var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:27017/mydb";
+var url = MONGOLAB_URI || "mongodb://localhost:27017/mydb";
 
 bittrex.options({
     'apikey': '0be3cd502e804ee18d3a2f99003128d0',
