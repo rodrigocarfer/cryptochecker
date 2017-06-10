@@ -50,7 +50,7 @@ function fillCurrenciesTable(currenciesData){
   var loadBtn = $('#loadBtn');
   loadBtn.prop('disabled', false);
   loadBtn.attr('value', 'Load');  
-  //onLoadClick();
+  onLoadClick();
   
   if(firstAccess){
 	  getHistory(prepareDataAndDrawChart);
@@ -99,7 +99,6 @@ function prepareDataAndDrawChart(data){
 	
 	var dates = [];
 	var values = [];
-	console.log(data);
 	Array.from(JSON.parse(data)).forEach(function(item){
 		dates.push(item.date);
 		values.push(item.value);
