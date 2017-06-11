@@ -9,7 +9,12 @@ function onLoadClick(){
 }
 
 function fillCurrenciesTable(currenciesData){
-
+	
+  if(currenciesData.indexOf('_id') !== -1){
+	  onLoadClick();
+	  return;
+  }		
+	
   var loadTime = $('#lastUpd');
   var totalAmtField = $('#totalAmt');
   var currenciesObj = JSON.parse(currenciesData);
