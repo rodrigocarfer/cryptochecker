@@ -5,14 +5,7 @@ function onLoadClick(){
 	loadBtn.prop('disabled', true);
 	loadBtn.attr('value', 'Loading ...');
 	
-	createCurrencyTable();
-}
-
-function createCurrencyTable(currenciesData){
-	
-  var totalDiv = $('#totalDiv');
-  totalDiv.html('');
-  getBalances(fillCurrenciesTable);
+	getBalances(fillCurrenciesTable);
 }
 
 function fillCurrenciesTable(currenciesData){
