@@ -40,8 +40,8 @@ var MongoClient = require('mongodb').MongoClient;
 var url = process.env.MONGOLAB_URI || "mongodb://localhost:27017/mydb";
 
 bittrex.options({
-    'apikey': '0be3cd502e804ee18d3a2f99003128d0',
-    'apisecret': '8aa9176bd00546b8b6a49e1b428d85c2',
+    'apikey': process.env.APIKEY,
+    'apisecret': process.env.APISECRET,
     'stream': false,
     'verbose': false,
     'cleartext': false
