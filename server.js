@@ -40,8 +40,8 @@ var MongoClient = require('mongodb').MongoClient;
 var url = process.env.MONGOLAB_URI || "mongodb://localhost:27017/mydb";
 
 bittrex.options({
-    'apikey': process.env.APIKEY,
-    'apisecret': process.env.APISECRET,
+    'apikey': '81ac1038a9df4de4be6611233db7f98b',
+    'apisecret': '3c044f06b85f446986733c810e0a361e',
     'stream': false,
     'verbose': false,
     'cleartext': false
@@ -186,9 +186,9 @@ function checkDbUpdate(){
 		  else if (tickerData.Balance == 0){
 			  obtainedPrices++;		  
 		  }
-		  else 
+		  else
 		  {
-			  var url = "https://bittrex.com/api/v1.1/public/getticker?market=";
+			var url = "https://bittrex.com/api/v1.1/public/getticker?market=";
 				
 			if(tickerData.Currency == "USDT")
 				url += tickerData.Currency + "-BTC";
@@ -196,7 +196,8 @@ function checkDbUpdate(){
 				url += "BTC-" + tickerData.Currency;	
 		
 			  bittrex.sendCustomRequest(url, function (marketData) {
-				  totalAmount += tickerData.Balance * marketData.result.Last;
+				  if(tickerData.Currency != "USDT" )
+					totalAmount += tickerData.Balance * marketData.result.Last;
 				  obtainedPrices++;
 				  
 				  if(obtainedPrices == totalCurrencies)
