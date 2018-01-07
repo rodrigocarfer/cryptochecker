@@ -106,6 +106,19 @@ app.listen(app.get('port'), function() {
 });
 
 function timeToReturn(res, currencies){
+	
+	if(currencies["USDT"] != undefined)
+	{
+		var dollarBtcPrice = currencies["USDT"].DollarAmt;
+		
+		for (var i = 0, len = currencies.length; i < len; i++) {
+			if(item.Currency != "USDT")
+				item.DollarAmt = dollarBtcPrice * item.BtcValue;
+			else 
+				item.DollarAmt = currencies.Balance;
+		}
+	}		
+	
 	if(currencies["obtainedPrices"] == currencies["currenciesQuantity"]){		
 		res.writeHead(200, {"Content-Type": "application/json"});
 		res.end(JSON.stringify(currencies).toString());
@@ -115,6 +128,7 @@ function timeToReturn(res, currencies){
 function prepareData(data){
 	data.CryptoAddress = undefined;
 	data.Pending = undefined;
+	
 	return data;
 }
 
@@ -125,14 +139,31 @@ function checkRate(tickerData, currencies, res) {
 		currencies[tickerData.Currency] = prepareData(tickerData);	
 		timeToReturn(res, currencies);		
     }
-    else {
-        var url = "https://bittrex.com/api/v1.1/public/getticker?market=BTC-" + tickerData.Currency;
+    else 
+	{
+        var url = "https://bittrex.com/api/v1.1/public/getticker?market=";
+				
+		if(tickerData.Currency == "USDT")
+			url += tickerData.Currency + "-BTC";
+		else
+			url += "BTC-" + tickerData.Currency;			
+		
         bittrex.sendCustomRequest(url, function (marketData) {
    
 		var rate = marketData.result.Last;
-		tickerData.BtcValue = tickerData.Balance * rate;
+		
+		if(tickerData.Currency != "USDT")
+		{						
+			tickerData.BtcValue = tickerData.Balance * rate;
+		}	
+		else 
+		{
+			tickerData.DollarAmt = rate;
+		}
+
 		currencies["obtainedPrices"]++;
-		currencies[tickerData.Currency] = prepareData(tickerData);	
+		currencies[tickerData.Currency] = prepareData(tickerData);		
+		
 		timeToReturn(res, currencies);
         });	
     }		
@@ -157,7 +188,13 @@ function checkDbUpdate(){
 		  }
 		  else 
 		  {
-			  var url = "https://bittrex.com/api/v1.1/public/getticker?market=BTC-" + tickerData.Currency;
+			  var url = "https://bittrex.com/api/v1.1/public/getticker?market=";
+				
+			if(tickerData.Currency == "USDT")
+				url += tickerData.Currency + "-BTC";
+			else
+				url += "BTC-" + tickerData.Currency;	
+		
 			  bittrex.sendCustomRequest(url, function (marketData) {
 				  totalAmount += tickerData.Balance * marketData.result.Last;
 				  obtainedPrices++;

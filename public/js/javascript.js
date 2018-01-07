@@ -1,32 +1,32 @@
-var firstAccess = true;
 
-function onLoadClick(){	
-	var loadBtn = $('#loadBtn');
-	loadBtn.prop('disabled', true);
-	loadBtn.attr('value', 'Loading ...');
-	
+function onLoadData(){		
 	getBalances(fillCurrenciesTable);
 }
 
 function fillCurrenciesTable(currenciesData){
 	
-  if(currenciesData.indexOf('_id') !== -1){
-	  onLoadClick();
-	  return;
-  }		
-	
-  var loadTime = $('#lastUpd');
-  var totalAmtField = $('#totalAmt');
   var currenciesObj = JSON.parse(currenciesData);
-
-  delete currenciesObj.currenciesQuantity;
-  delete currenciesObj.obtainedPrices;
   
-  var totalAmount = 0;
+  var totalBtcAmount = 0;
+  var totalDollarAmount = 0;
   
+  var BtcDollarValue = currenciesObj["USDT"].DollarAmt;
+    
   Object.keys(currenciesObj).forEach(function(key) {
     if(typeof currenciesObj[key].BtcValue == 'number') 
-		totalAmount += currenciesObj[key].BtcValue;
+		totalBtcAmount += currenciesObj[key].BtcValue;	
+	if(key == "USDT"){
+		currenciesObj[key].BtcValue = currenciesObj[key].Balance;
+	}
+	else 
+		currenciesObj[key].DollarAmt = currenciesObj[key].BtcValue * BtcDollarValue;
+	
+	if(typeof currenciesObj[key].DollarAmt == 'number'){
+		if(key == "USDT")
+			totalDollarAmount += currenciesObj[key].Balance;
+		else 
+			totalDollarAmount += currenciesObj[key].DollarAmt;
+	}
   });
   
   var currenciesArray = [];
@@ -35,26 +35,21 @@ function fillCurrenciesTable(currenciesData){
 		currenciesArray[currenciesArray.length] = currenciesObj[key];
 	}
   }
-  currenciesArray.unshift({"Title1":"Currency","Title2":"Balance","Title3":"Available","Title4":"Btn value"});
+  
+  currenciesArray.unshift({"Title1":"Currency","Title2":"Balance","Title3":"Available","Title4":"Btn value","Title5":"Dollar value"});
   currenciesArray = currenciesArray.sort(function(a,b){return b['BtcValue'] > a['BtcValue']});
   
   var currencyTable = $('#currenciesTable');
   currencyTable.html('');
   $.jsontotable(currenciesArray, { id: "#currenciesTable" , header: true});  
-  loadTime.html(new Date());  
- 
-  totalAmtField.html(totalAmount);
   
-  var loadBtn = $('#loadBtn');
-  loadBtn.prop('disabled', false);
-  loadBtn.attr('value', 'Load');  
-  onLoadClick();
+  $('#lastUpd').html(new Date()); 
+  $('#totalBtcAmt').html(totalBtcAmount);
   
-  if(firstAccess){
-	  getHistory(prepareDataAndDrawChart);
-	  firstAccess = false;
-	  $("#currenciesTable").prependTo("#totalDiv");
-  }
+  $('#totalDollarAmt').html(totalDollarAmount);
+  
+  getHistory(prepareDataAndDrawChart);
+  $("#currenciesTable").prependTo("#totalDiv");  
 }
 
 function getBalances(callback){
@@ -93,8 +88,7 @@ function delBalance(date){
 	xmlhttp.send("date="+date);
 }
 
-function prepareDataAndDrawChart(data){
-	
+function prepareDataAndDrawChart(data){	
 	var dates = [];
 	var values = [];
 	Array.from(JSON.parse(data)).forEach(function(item){
@@ -114,4 +108,6 @@ function drawAmountChart(xData,yData){
 }
 
 
+			
+			
 			
